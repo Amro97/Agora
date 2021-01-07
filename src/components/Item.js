@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 class Item extends Component {
     

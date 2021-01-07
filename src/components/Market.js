@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import Item from './Item'
 
 class Market extends Component {
 
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      this.addItem(e.value)
+      this.addItem(e.target.value)
     }
   }
 
   addItem = (itemName) => {
-    this.props.market.addItem(itemName)
+    this.props.inventory.addItem(itemName)
   }
 
   render() {
+    let market = this.props.inventory
     return (
         <div className="market">
             <input onKeyDown={this.handleKeyDown}/>
-            {this.props.market.items.map(item => <Item key={item.name} item={item} market={this.props.market}/>)}
+            {market.items.map(item => <Item key={item.name} item={item} market={market}/>)}
+            <span>{market.numItems}</span>
         </div>
     )
   }
 }
 
-export default observer(Market)
+export default inject('inventory')(observer(Market))
